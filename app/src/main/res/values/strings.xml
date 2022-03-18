@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">CW</string>
+    <string name="button">NEW GAME</string>
+    <string name="BtnAbout">About</string>
+
+    <string name="iit_no_20200747">speeech</string>
+    <string name="name_chamod_caldera">Name -Chamod Caldera\nhello</string>
+    <string name="close">Close</string>
+    <string name="greater">GREATER</string>
+    <string name="equal">==</string>
+    <string name="less">LESS</string>
+    <string name="iit_id_20200747">IIT ID- 20200747</string>
+    <string name="longtxt">I confirm that I understand what plagiarism is and have read and understood the section on Assessment Offences in the Essential Information for Students. The work that I have submitted is entirely my own. Any work from other authors is duly referenced and acknowledged.</string>
+    <string name="exp1">TextView</string>
+    <string name="exp2">TextView</string>
+    <string name="muliline">I confirm that I understand what plagiarism is and have read and understood the section on Assessment Offences in the Essential Information for Students. The work that I have submitted is entirely my own. Any work from other authors is duly referenced and acknowledged.</string>
+    <string name="credentials">Name : Chamod Caldera IIT NO_20200747</string>
+</resources>
