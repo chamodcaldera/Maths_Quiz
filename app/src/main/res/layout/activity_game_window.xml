@@ -79,19 +79,25 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="382dp"
-        android:layout_height="15dp"
-        tools:layout_editor_absoluteX="-3dp"
-        tools:layout_editor_absoluteY="51dp" />
+        android:layout_width="405dp"
+        android:layout_height="17dp"
+        android:progressBackgroundTint="#04FF10"
+        android:progressTint="#FD0303"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.085" />
 
     <TextView
-        android:id="@+id/pointsTxt"
+        android:id="@+id/Correcttxt"
         android:layout_width="154dp"
         android:layout_height="38dp"
         android:background="#FAF3F5"
-        android:text="TextView"
         android:textColor="#10C818"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="108dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.161" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import java.lang.ArithmeticException
 
 import java.util.*
 import java.lang.NumberFormatException
@@ -19,23 +22,31 @@ class GameWindow : AppCompatActivity()  {
     var wrongans=0
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_window)
 
+
+        progtimer()
         genrate()
 
-        val points=0
+
 
 
     }
 
+//    fun markButtonDisable(button: Button) {
+//        button?.isEnabled = false
+//
+//    }
+
 
 
         @SuppressLint("SetTextI18n")
-      public  fun genrate(){
+       fun genrate(){
 
-        progtimer()
+
 
 
     val expre1 = findViewById<TextView>(R.id.Expression1)
@@ -48,62 +59,120 @@ class GameWindow : AppCompatActivity()  {
             val validation1 = Node.evalTree(newtree1)
             val validation2 = Node.evalTree(newtree2)
 
-            while (true){
-                if(0 >validation1 && validation2 >100){
-                    genrate()
+    try {
 
-                }else{break
-                }
+
+        while (true) {
+            if (0 > validation1 && validation2 > 100) {
+                genrate()
+
+            } else {
+                break
+            }
+        }
+
+
+        if (ranlevel1 == 2 || ranlevel2 == 2) {
+            expre1.setText(newtree1.toString1())
+            expre2.setText(newtree2.toString1())
+        } else {
+            expre1.setText(newtree1.toString())
+            expre2.setText(newtree2.toString())
+        }
+
+        val gbt = findViewById<Button>(R.id.Gbtn)
+        val eqbt = findViewById<Button>(R.id.Eqbtn)
+        val lbtn = findViewById<Button>(R.id.Lbtn)
+
+        val eqtxt = findViewById<TextView>(R.id.EvaluvateTxt)
+
+
+        lbtn.setOnClickListener {
+            if (validation1 > validation2) {
+                eqtxt.setText("Correct!")
+                correctans = correctans + 1
+                genrate()
+            } else {
+                eqtxt.setText("Wrong")
+                wrongans = wrongans + 1
+                genrate()
+            }
+        }
+
+        eqbt.setOnClickListener {
+            if (validation1 > validation2) {
+                eqtxt.setText("Correct!")
+                correctans = correctans + 1
+                genrate()
+            } else {
+                eqtxt.setText("Wrong")
+                wrongans = wrongans + 1
+                genrate()
+            }
+        }
+
+
+        gbt.setOnClickListener {
+
+            if (validation1 > validation2) {
+                eqtxt.setText("Correct!")
+                correctans = correctans + 1
+                genrate()
+            } else {
+                eqtxt.setText("Wrong")
+                wrongans = wrongans + 1
+                genrate()
             }
 
-    if (ranlevel1 == 2 || ranlevel2 == 2) {
-        expre1.setText(newtree1.toString1())
-        expre2.setText(newtree2.toString1())
-    } else {
-        expre1.setText(newtree1.toString())
-        expre2.setText(newtree2.toString())
+        }
+    }catch (ex :Exception){
+        print("")
     }
-
-            val gbt=findViewById<Button>(R.id.Gbtn)
-            val eqbt=findViewById<Button>(R.id.Eqbtn)
-            val lbtn=findViewById<Button>(R.id.Lbtn)
-
-            val eqtxt=findViewById<TextView>(R.id.EvaluvateTxt)
-
-
-
-
-
-            gbt.setOnClickListener {
-
-                if (validation1>validation2){
-                    eqtxt.setText("Correct!")
-                    genrate()
-
-
-
-                }else{
-                    eqtxt.setText("Wrong")
-                    genrate()
-                }
-
-            }
-
 }
 
     private fun progtimer() {
         val progbar= findViewById<ProgressBar>(R.id.progressBar)
+        val corrtxt=findViewById<TextView>(R.id.Correcttxt)
 
-        val tim:Timer =
+        object : CountDownTimer(50000, 1000) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                val increment:Int
+                increment = ((progbar.getMax() * 1000) / (1000 * 50))
+                progbar.setProgress(progbar.getProgress() + increment)
+
+            }
+
+            @SuppressLint("SetTextI18n")
+            override fun onFinish() {
+
+                corrtxt.setText("Correct Ansers :"+ correctans)
+                val gretbtn=findViewById<Button>(R.id.Gbtn)
+                val equlbtn=findViewById<Button>(R.id.Eqbtn)
+                val lessbtn=findViewById<Button>(R.id.Lbtn)
+
+                gretbtn.isEnabled=false
+                equlbtn.isEnabled=false
+                lessbtn.isEnabled=false
+
+
+
+
+            }
+        }.start()
     }
 
 
-    object Node {
+    object Node  {
+
+
         var operators = arrayOf("/", "*", "-", "+")
         fun buildTree(numOfNodes: Double): TreeNode {
             val randNum = Random()
             if (numOfNodes == 1.0) {
-                val value = 1 + randNum.nextInt(20)
+//                val value = 1 + randNum.nextInt(20)
+                  val value=(1..20).random()
+
                 return TreeNode(null, null, Integer.toString(value))
             }
             val numLeft = Math.ceil(numOfNodes / 2)
@@ -122,7 +191,7 @@ class GameWindow : AppCompatActivity()  {
 
             // Leaf node i.e, an integer
             if (root.left == null && root.right == null) try {
-                return root.operator.toInt() // output = 25
+                return root.operator.toInt()
             } catch (ex: NumberFormatException) {
                 ex.printStackTrace()
             }
@@ -137,7 +206,11 @@ class GameWindow : AppCompatActivity()  {
             // Check which operator to apply
             if (root.operator == "+") return leftEval + rightEval
             if (root.operator == "-") return leftEval - rightEval
-            return if (root.operator == "*") leftEval * rightEval else leftEval / rightEval
+            return if (root.operator == "*") leftEval * rightEval else try {
+                leftEval / rightEval
+            } catch (e :ArithmeticException){
+                return 0
+            }
         }
 
 
