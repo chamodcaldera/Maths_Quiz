@@ -1,11 +1,10 @@
 package com.example.cw
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -13,8 +12,6 @@ import java.lang.ArithmeticException
 
 import java.util.*
 import java.lang.NumberFormatException
-import java.util.*
-import kotlin.jvm.JvmStatic
 
 class GameWindow : AppCompatActivity()  {
 
@@ -84,16 +81,21 @@ class GameWindow : AppCompatActivity()  {
         val eqbt = findViewById<Button>(R.id.Eqbtn)
         val lbtn = findViewById<Button>(R.id.Lbtn)
 
-        val eqtxt = findViewById<TextView>(R.id.EvaluvateTxt)
+        val eqtxt = findViewById<TextView>(R.id.EvaluvateTxt2)
+
 
 
         lbtn.setOnClickListener {
             if (validation1 > validation2) {
+                eqtxt.setTextColor(Color.GREEN)
                 eqtxt.setText("Correct!")
+
                 correctans = correctans + 1
                 genrate()
             } else {
+                eqtxt.setTextColor(Color.RED)
                 eqtxt.setText("Wrong")
+
                 wrongans = wrongans + 1
                 genrate()
             }
@@ -101,12 +103,16 @@ class GameWindow : AppCompatActivity()  {
 
         eqbt.setOnClickListener {
             if (validation1 > validation2) {
+                eqtxt.setTextColor(Color.GREEN)
                 eqtxt.setText("Correct!")
+
                 correctans = correctans + 1
                 genrate()
             } else {
+                eqtxt.setTextColor(Color.RED)
                 eqtxt.setText("Wrong")
-                wrongans = wrongans + 1
+
+
                 genrate()
             }
         }
@@ -115,11 +121,15 @@ class GameWindow : AppCompatActivity()  {
         gbt.setOnClickListener {
 
             if (validation1 > validation2) {
+                eqtxt.setTextColor(Color.GREEN)
                 eqtxt.setText("Correct!")
+
                 correctans = correctans + 1
                 genrate()
             } else {
+                eqtxt.setTextColor(Color.RED)
                 eqtxt.setText("Wrong")
+
                 wrongans = wrongans + 1
                 genrate()
             }
@@ -133,6 +143,7 @@ class GameWindow : AppCompatActivity()  {
     private fun progtimer() {
         val progbar= findViewById<ProgressBar>(R.id.progressBar)
         val corrtxt=findViewById<TextView>(R.id.Correcttxt)
+        val wrongtxt=findViewById<TextView>(R.id.wrongAmt)
 
         object : CountDownTimer(50000, 1000) {
 
@@ -147,6 +158,8 @@ class GameWindow : AppCompatActivity()  {
             override fun onFinish() {
 
                 corrtxt.setText("Correct Ansers :"+ correctans)
+                wrongtxt.setText("Wrong Answers :"+wrongans)
+
                 val gretbtn=findViewById<Button>(R.id.Gbtn)
                 val equlbtn=findViewById<Button>(R.id.Eqbtn)
                 val lessbtn=findViewById<Button>(R.id.Lbtn)
